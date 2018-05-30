@@ -40,6 +40,7 @@ require_relative '../util/nailgun.rb'
 require_relative '../util/normalize.rb'
 require_relative '../util/sanitize.rb'
 require_relative '../util/xmlutil.rb'
+require_relative '../util/titleKey.rb'
 
 # Max size (in bytes, I think) of a batch to send to AWS CloudSearch.
 # According to the docs the absolute limit is 5 megs, so let's back off a
@@ -957,6 +958,9 @@ def parseUCIngest(itemID, inMeta, fileType)
   dbItem[:attrs]        = JSON.generate(attrs)
   dbItem[:rights]       = rights
   dbItem[:ordering_in_sect] = inMeta.text_at("./context/publicationOrder")
+
+  # Title key is used for de-duping
+  attrs[:title_key] = calcTitleKey(dbItem[:title])
 
   # Populate ItemAuthor model instances
   authors = getAuthors(inMeta.xpath("//authors/*"), "author")
@@ -2125,6 +2129,27 @@ def checkAllStruct
 end
 
 ###################################################################################################
+def recalcTitleKeys
+  puts "Recalculating title keys."
+  total = updated = 0
+  DB.transaction {
+    Item.each { |item|
+      total += 1
+      (total % 1000) == 0 and puts "Checked #{total} so far, updated #{updated}."
+      attrs = item.attrs ? JSON.parse(item.attrs) : {}
+      tk = calcTitleKey(item.title)
+      if tk != attrs['title_key']
+        attrs['title_key'] = tk
+        item.attrs = attrs.to_json
+        item.save
+        updated += 1
+      end
+    }
+  }
+  puts "Updated #{updated}, unchanged #{total-updated}, total #{total}."
+end
+
+###################################################################################################
 # Main action begins here
 
 startTime = Time.now
@@ -2153,6 +2178,8 @@ begin
       recalcOA
     when "--checkAllStruct"
       checkAllStruct
+    when "--recalcTitleKeys"
+      recalcTitleKeys
     else
       STDERR.puts "Usage: #{__FILE__} --units|--items"
       exit 1
