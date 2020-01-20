@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import $ from 'jquery'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class RedirRow extends React.Component {
   onSave = event => {
@@ -57,6 +58,7 @@ export default class RedirectConfigLayout extends React.Component
     let p = this.props
     return (
       <div className="c-columns">
+        <MetaTagsComp title="Redirects"/>
         <main id="maincontent" tabIndex="-1">
           <section className="o-columnbox1">
             <header>

@@ -333,29 +333,10 @@ class PageBase extends React.Component
           if (!this.state.cmsModules) {
             // Load CMS-specific modules asynchronously
             require.ensure(['../components/DrawerComp.jsx',
-                            '../layouts/UnitProfileLayout.jsx',
-                            '../layouts/UnitCarouselConfigLayout.jsx',
-                            '../layouts/UnitIssueConfigLayout.jsx',
-                            '../layouts/UnitUserConfigLayout.jsx',
-                            '../layouts/UnitSidebarConfigLayout.jsx',
-                            '../layouts/UnitNavConfigLayout.jsx',
-                            '../layouts/RedirectConfigLayout.jsx',
-                            '../layouts/AuthorSearchLayout.jsx',
-                            '../layouts/UnitBuilderLayout.jsx'
+                            '../layouts/UnitCMSLayout.jsx'
                            ], (require) => {
-              this.setState({ cmsModules: { Trumbowyg: require('../objects/TrumbowygObj.jsx').default,
-                                            Sidebar: require('react-sidebar').default,
-                                            SortableTree: require('react-sortable-tree').default,
-                                            DrawerComp: require('../components/DrawerComp.jsx').default,
-                                            UnitProfileLayout: require('../layouts/UnitProfileLayout.jsx').default,
-                                            UnitCarouselConfigLayout: require('../layouts/UnitCarouselConfigLayout.jsx').default,
-                                            UnitIssueConfigLayout: require('../layouts/UnitIssueConfigLayout.jsx').default,
-                                            UnitUserConfigLayout: require('../layouts/UnitUserConfigLayout.jsx').default,
-                                            UnitSidebarConfigLayout: require('../layouts/UnitSidebarConfigLayout.jsx').default,
-                                            UnitNavConfigLayout: require('../layouts/UnitNavConfigLayout.jsx').default,
-                                            RedirectConfigLayout: require('../layouts/RedirectConfigLayout.jsx').default,
-                                            AuthorSearchLayout: require('../layouts/AuthorSearchLayout.jsx').default,
-                                            UnitBuilderLayout: require('../layouts/UnitBuilderLayout.jsx').default
+              this.setState({ cmsModules: { DrawerComp: require('../components/DrawerComp.jsx').default,
+                                            UnitCMSLayout: require('../layouts/UnitCMSLayout.jsx').default
                                           } })
             }, "cms") // load from webpack "cms" bundle
           }

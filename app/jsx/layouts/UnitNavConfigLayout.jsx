@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import WysiwygEditorComp from '../components/WysiwygEditorComp.jsx'
 import Contexts from '../contexts.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class EditableNavContentComp extends React.Component
 {
@@ -123,6 +124,7 @@ export default class UnitNavConfigLayout extends React.Component
     let p = this.props
     return (
       <div className="c-columns">
+        <MetaTagsComp title="Navigation"/>
         <main id="maincontent" tabIndex="-1">
           <section className="o-columnbox1">
             <header>

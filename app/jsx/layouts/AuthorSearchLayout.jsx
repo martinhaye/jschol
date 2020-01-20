@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import FormComp from '../components/FormComp.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 export default class AuthorSearchLayout extends React.Component
 {
@@ -18,6 +19,7 @@ export default class AuthorSearchLayout extends React.Component
     let p = this.props
     return (
       <div className="c-columns">
+        <MetaTagsComp title="Author Search"/>
         <main id="maincontent" tabIndex="-1">
           <section className="o-columnbox1">
             <header>

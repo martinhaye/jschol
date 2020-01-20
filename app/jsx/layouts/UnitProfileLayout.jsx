@@ -3,6 +3,7 @@ import WysiwygEditorComp from '../components/WysiwygEditorComp.jsx'
 import Contexts from '../contexts.jsx'
 import FormComp from '../components/FormComp.jsx'
 import _ from 'lodash'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class UnitProfileLayout extends React.Component {
   // static propTypes = {
@@ -84,6 +85,7 @@ class UnitProfileLayout extends React.Component {
                            (this.props.unit.type == "campus" && disableEdit)
          return (
          <div>
+           <MetaTagsComp title="Profile"/>
            <h3>Unit Configuration</h3>
            <div className="c-columns">
              <main>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import FormComp from '../components/FormComp.jsx'
 import _ from 'lodash'
 import Contexts from '../contexts.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class RightsDropdown extends React.Component {
   render = () =>
@@ -101,6 +102,7 @@ export default class UnitIssueConfigLayout extends React.Component
           }
           return (
             <div>
+              <MetaTagsComp title="Issue Config"/>
               <h3>Issue Configuration</h3>
               <div className="c-columns">
                 <main>

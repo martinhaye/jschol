@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
 import WysiwygEditorComp from '../components/WysiwygEditorComp.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class EditableSidebarContentComp extends React.Component
 {
@@ -89,6 +90,7 @@ export default class UnitSidebarConfigLayout extends React.Component
     let kindStr = p.data.kind == "Text" ? "text widget" : "built-in widget"
     return (
       <div className="c-columns">
+        <MetaTagsComp title="Sidebar"/>
         <main id="maincontent" tabIndex="-1">
           <section className="o-columnbox1">
             <header>

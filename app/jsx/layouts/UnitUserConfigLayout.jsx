@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import FormComp from '../components/FormComp.jsx'
 import _ from 'lodash'
 import Contexts from '../contexts.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 export default class UnitUserConfigLayout extends React.Component
 {
@@ -21,6 +22,7 @@ export default class UnitUserConfigLayout extends React.Component
               disableEdit = !(cms.permissions && cms.permissions.super)
           return (
             <div>
+              <MetaTagsComp title="User Config"/>
               <h3>User Configuration</h3>
               <div className="c-columns">
                 <main>

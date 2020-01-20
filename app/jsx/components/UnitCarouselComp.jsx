@@ -89,6 +89,7 @@ class UnitCarouselComp extends React.Component {
     let pluralItems = (p.item_count == 1) ? '' : 's'
     return (
       <div className="c-campuscarouselframe">
+        <MetaTagsComp title="Carousel"/>
         <h2 className="c-campuscarouselframe__heading"><Link to={"/uc/"+p.titleID}>{p.titleName}</Link></h2>
         <div className="c-campuscarouselframe__carousel">
           <div className="c-unitcarousel">

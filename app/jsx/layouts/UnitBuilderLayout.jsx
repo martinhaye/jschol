@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import FormComp from '../components/FormComp.jsx'
 import { Link } from 'react-router-dom'
 import Contexts from '../contexts.jsx'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 const UNIT_TYPE_TO_LABEL = { series: "paper series",
                              monograph_series: "monograph series",
@@ -71,6 +72,7 @@ export default class UnitBuilderLayout extends React.Component
     let p = this.props
     return (
       <div className="c-columns">
+        <MetaTagsComp title="Unit Builder"/>
         <main id="maincontent" tabIndex="-1">
           <section className="o-columnbox1">
             <header>

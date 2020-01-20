@@ -5,6 +5,7 @@ import MarqueeComp from '../components/MarqueeComp.jsx'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import MEDIA_PATH from '../../js/MediaPath.js'
+import MetaTagsComp from '../components/MetaTagsComp.jsx'
 
 class HeroCarouselLayout extends React.Component {
   state = { newData: this.props.data }
@@ -328,10 +329,11 @@ class UnitCarouselConfigLayout extends React.Component {
     let data = this.props.data
     return (
       <div>
-      { this.props.unit.type != 'campus' && 
-        <HeroCarouselLayout {...this.props} /> }
-      { this.props.unit.type == 'campus' && (data.contentCar1 || data.contentCar2) &&
-        <CampusCarouselConfig data={data} unit={this.props.unit} sendApiData={this.props.sendApiData} /> }
+        <MetaTagsComp title="Carousel"/>
+        { this.props.unit.type != 'campus' &&
+          <HeroCarouselLayout {...this.props} /> }
+        { this.props.unit.type == 'campus' && (data.contentCar1 || data.contentCar2) &&
+          <CampusCarouselConfig data={data} unit={this.props.unit} sendApiData={this.props.sendApiData} /> }
       </div>
     )
   }

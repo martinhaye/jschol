@@ -68,7 +68,6 @@ class UnitPage extends PageBase {
     const pageName = this.props.match.params.pageName
     const unitType = data.unit.type
     const isCmsPage = /profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch/.test(pageName)
-    const cmsTitle = cmsTitleMap[pageName] ? `${cmsTitleMap[pageName]}: ${data.unit.name}`
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
@@ -88,8 +87,7 @@ class UnitPage extends PageBase {
               : pageName === 'search' ?
                 <SeriesLayout unit={data.unit} data={data.content} sidebar={sidebar} marquee={data.marquee}/>
               : isCmsPage ?
-                <cms.modules.UnitCMSLayout unit={data.unit} data={data.content}
-                                           sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
+                <cms.modules.UnitCMSLayout pageName={pageName} data={data} sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
               : pageName && !(data.content.issue) ?
                 /* If there's issue data here it's a journal page, otherwise it's static content */
                 <UnitStaticPageLayout unit={data.unit} data={data.content} sidebar={sidebar} fetchPageData={this.fetchPageData}/>
