@@ -329,10 +329,32 @@ class PageBase extends React.Component
           this.setState({ fetchingPerms: false, permissions: data, permissionsUnit: unit })
           if (!this.state.cmsModules) {
             // Load CMS-specific modules asynchronously
-            require.ensure(['../objects/TrumbowygObj.jsx', 'react-sidebar', 'react-sortable-tree'], (require) => {
+            require.ensure(['../objects/TrumbowygObj.jsx',
+                            'react-sidebar',
+                            'react-sortable-tree',
+                            '../layouts/UnitProfileLayout.jsx',
+                            '../layouts/UnitCarouselConfigLayout.jsx',
+                            '../layouts/UnitIssueConfigLayout.jsx',
+                            '../layouts/UnitUserConfigLayout.jsx',
+                            '../layouts/UnitSidebarConfigLayout.jsx',
+                            '../layouts/UnitNavConfigLayout.jsx',
+                            '../layouts/RedirectConfigLayout.jsx',
+                            '../layouts/AuthorSearchLayout.jsx',
+                            '../layouts/UnitBuilderLayout.jsx'
+                           ], (require) => {
               this.setState({ cmsModules: { Trumbowyg: require('../objects/TrumbowygObj.jsx').default,
                                             Sidebar: require('react-sidebar').default,
-                                            SortableTree: require('react-sortable-tree').default } })
+                                            SortableTree: require('react-sortable-tree').default,
+                                            UnitProfileLayout: require('../layouts/UnitProfileLayout.jsx').default,
+                                            UnitCarouselConfigLayout: require('../layouts/UnitCarouselConfigLayout.jsx').default,
+                                            UnitIssueConfigLayout: require('../layouts/UnitIssueConfigLayout.jsx').default,
+                                            UnitUserConfigLayout: require('../layouts/UnitUserConfigLayout.jsx').default,
+                                            UnitSidebarConfigLayout: require('../layouts/UnitSidebarConfigLayout.jsx').default,
+                                            UnitNavConfigLayout: require('../layouts/UnitNavConfigLayout.jsx').default,
+                                            RedirectConfigLayout: require('../layouts/RedirectConfigLayout.jsx').default,
+                                            AuthorSearchLayout: require('../layouts/AuthorSearchLayout.jsx').default,
+                                            UnitBuilderLayout: require('../layouts/UnitBuilderLayout.jsx').default
+                                          } })
             }, "cms") // load from webpack "cms" bundle
           }
         }
