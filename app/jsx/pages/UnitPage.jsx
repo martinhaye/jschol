@@ -67,22 +67,13 @@ class UnitPage extends PageBase {
     const sidebar = <SidebarComp data={data.sidebar}/>
     const pageName = this.props.match.params.pageName
     const unitType = data.unit.type
-    const cmsTitleMap = { profile: "Profile",
-                          carousel: "Carousel",
-                          issueConfig: "Issue config",
-                          userConfig: "User config",
-                          unitBuilder: "Unit builder",
-                          nav: "Navigation",
-                          sidebar: "Sidebar",
-                          redirects: "Redirects",
-                          authorSearch: "Author Search"
-                        }
+    const isCmsPage = /profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch/.test(pageName)
+    const cmsTitle = cmsTitleMap[pageName] ? `${cmsTitleMap[pageName]}: ${data.unit.name}`
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
           <div>
-            <MetaTagsComp title={cmsTitleMap[pageName] ? `${cmsTitleMap[pageName]}: ${data.unit.name}` :
-                                 (data.content.title || data.unit.name)}/>
+            { !isCmsPage && <MetaTagsComp title={data.content.title || data.unit.name}/> }
             { unitType == "root"
               ? <Header1Comp/>
               : <Header2Comp type={unitType} unitID={data.unit.id} />
@@ -96,24 +87,9 @@ class UnitPage extends PageBase {
                 <h2 style={{ marginTop: "5em", marginBottom: "5em" }}>Loading...</h2>
               : pageName === 'search' ?
                 <SeriesLayout unit={data.unit} data={data.content} sidebar={sidebar} marquee={data.marquee}/>
-              : pageName === 'profile' ?
-                this.cmsPage(data, cms, 'UnitProfileLayout')
-              : pageName === 'carousel' ?
-                this.cmsPage(data, cms, 'UnitCarouselConfigLayout')
-              : pageName === 'issueConfig' ?
-                this.cmsPage(data, cms, 'UnitIssueConfigLayout')
-              : pageName === 'userConfig' ?
-                this.cmsPage(data, cms, 'UnitUserConfigLayout')
-              : pageName === 'unitBuilder' ?
-                this.cmsPage(data, cms, 'UnitBuilderLayout')
-              : pageName === 'nav' ?
-                this.cmsPage(data, cms, 'UnitNavConfigLayout')
-              : pageName === 'sidebar' ?
-                this.cmsPage(data, cms, 'UnitSidebarConfigLayout')
-              : pageName === 'redirects' ?
-                this.cmsPage(data, cms, 'RedirectConfigLayout')
-              : pageName === 'authorSearch' ?
-                this.cmsPage(data, cms, 'AuthorSearchLayout')
+              : isCmsPage ?
+                <cms.modules.UnitCMSLayout unit={data.unit} data={data.content}
+                                           sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
               : pageName && !(data.content.issue) ?
                 /* If there's issue data here it's a journal page, otherwise it's static content */
                 <UnitStaticPageLayout unit={data.unit} data={data.content} sidebar={sidebar} fetchPageData={this.fetchPageData}/>
