@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom'
 import SkipNavComp from '../components/SkipNavComp.jsx'
 import Header1Comp from '../components/Header1Comp.jsx'
 import FooterComp from '../components/FooterComp.jsx'
-import DrawerComp from '../components/DrawerComp.jsx'
 import TestMessageComp from '../components/TestMessageComp.jsx'
 import ScrollToTopComp from '../components/ScrollToTopComp.jsx'
 import NavComp from '../components/NavComp.jsx'
@@ -279,17 +278,21 @@ class PageBase extends React.Component
     // CMS drawer case
     if (this.shouldShowDrawer()) {
       return (
-        <DrawerComp data={this.state.pageData}
-                    sendApiData={this.sendApiData}
-                    sendBinaryFileData={this.sendBinaryFileData}
-                    fetchingData={this.state.fetchingData}>
-          {/* Not sure why the padding below is needed, but it is */}
-          <div className="body" style={{ padding: "20px" }}>
-            {this.needHeaderFooter() && <SkipNavComp/>}
-            {this.state.pageData ? this.renderData(this.state.pageData) : this.renderLoading()}
-            {this.needHeaderFooter() && <FooterComp/>}
-          </div>
-        </DrawerComp>)
+        <Contexts.CMS.Consumer>
+          { (cms) =>
+            <cms.modules.DrawerComp data={this.state.pageData}
+                                    sendApiData={this.sendApiData}
+                                    sendBinaryFileData={this.sendBinaryFileData}
+                                    fetchingData={this.state.fetchingData}>
+              {/* Not sure why the padding below is needed, but it is */}
+              <div className="body" style={{ padding: "20px" }}>
+                {this.needHeaderFooter() && <SkipNavComp/>}
+                {this.state.pageData ? this.renderData(this.state.pageData) : this.renderLoading()}
+                {this.needHeaderFooter() && <FooterComp/>}
+              </div>
+            </cms.modules.DrawerComp>
+          }
+        </Contexts.CMS.Consumer>)
     }
 
     // Normal case
@@ -329,9 +332,7 @@ class PageBase extends React.Component
           this.setState({ fetchingPerms: false, permissions: data, permissionsUnit: unit })
           if (!this.state.cmsModules) {
             // Load CMS-specific modules asynchronously
-            require.ensure(['../objects/TrumbowygObj.jsx',
-                            'react-sidebar',
-                            'react-sortable-tree',
+            require.ensure(['../components/DrawerComp.jsx',
                             '../layouts/UnitProfileLayout.jsx',
                             '../layouts/UnitCarouselConfigLayout.jsx',
                             '../layouts/UnitIssueConfigLayout.jsx',
@@ -345,6 +346,7 @@ class PageBase extends React.Component
               this.setState({ cmsModules: { Trumbowyg: require('../objects/TrumbowygObj.jsx').default,
                                             Sidebar: require('react-sidebar').default,
                                             SortableTree: require('react-sortable-tree').default,
+                                            DrawerComp: require('../components/DrawerComp.jsx').default,
                                             UnitProfileLayout: require('../layouts/UnitProfileLayout.jsx').default,
                                             UnitCarouselConfigLayout: require('../layouts/UnitCarouselConfigLayout.jsx').default,
                                             UnitIssueConfigLayout: require('../layouts/UnitIssueConfigLayout.jsx').default,

@@ -2,6 +2,8 @@ import React from 'react'
 import Contexts from '../contexts.jsx'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
+import SortableTree from 'react-sortable-tree'
+import Sidebar from 'react-sidebar'
 
 class AddWidgetMenu extends React.Component {
   state = { isOpen: false }
@@ -85,7 +87,6 @@ class SortableNavList extends React.Component {
   }
 
   render() {
-    const SortableTree = this.props.cms.modules.SortableTree
     return (
       <SortableTree
         treeData={this.state.data}
@@ -150,7 +151,6 @@ class SortableSidebarList extends React.Component {
   }
 
   render() {
-    const SortableTree = this.props.cms.modules.SortableTree
     return (
       <SortableTree
         treeData={this.state.data}
@@ -178,7 +178,6 @@ class NonSortableList extends React.Component {
   }
 
   render() {
-    const SortableTree = this.props.cms.modules.SortableTree
     return (
       <SortableTree
         treeData={this.state.data}
@@ -250,7 +249,7 @@ class DrawerComp extends React.Component {
       <div>
         <div className="c-drawer__heading">Site Settings</div>
 
-        <NonSortableList cms={cms} items={siteSettings}/>
+        <NonSortableList items={siteSettings}/>
 
         <div className="c-drawer__heading">
           Navigation Items
@@ -285,8 +284,7 @@ class DrawerComp extends React.Component {
         </div>
 
       {!this.props.data.unit.type.includes('series') ?
-        <SortableSidebarList cms={cms}
-                             unit={this.props.data.unit.id}
+        <SortableSidebarList unit={this.props.data.unit.id}
                              sidebarWidgets={this.props.data.sidebar}
                              fetchingData={this.props.fetchingData}
                              onChangeOrder={this.reorderSidebar}/>
@@ -302,12 +300,12 @@ class DrawerComp extends React.Component {
       { cms =>
         <div>
           {this.props.fetchingData && <div className="c-drawer__working-overlay"/>}
-          <cms.modules.Sidebar sidebar={this.drawerContent(cms)}
+          <Sidebar sidebar={this.drawerContent(cms)}
                    open={cms.isEditingPage}
                    docked={cms.isEditingPage}
                    sidebarClassName="c-drawer">
             {this.props.children}
-          </cms.modules.Sidebar>
+          </Sidebar>
         </div>
       }
     </Contexts.CMS.Consumer>

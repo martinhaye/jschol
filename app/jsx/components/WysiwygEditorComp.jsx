@@ -3,6 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Contexts from '../contexts.jsx'
+import TrumbowygObj from '../objects/TrumbowygObj.jsx'
 
 // Formatting buttons to display in the Trumbowyg editor
 const TRUMBO_BUTTONS = [
@@ -35,30 +36,30 @@ export default class WysiwygEditorComp extends React.Component
   let buttons = this.props.buttons ? this.props.buttons : TRUMBO_BUTTONS 
   return(
     <Contexts.CMS.Consumer>
-      { cms => cms.modules &&
-        <cms.modules.Trumbowyg 
-                   id={this.id}
-                   buttons={buttons}
-                   data={this.initialHTML}
-                   shouldInjectSvgIcons={false}
-                   svgIconsPath="/node_modules/trumbowyg/dist/ui/icons.svg"
-                   onChange={e => this.props.onChange(e.target.innerHTML)}
-                   disabled={this.props.disabled}
-                   tabToIndent={true}
-                   plugins={{
-                    // Add parameters to uploadImage plugin
-                    uploadImage: {
-                        serverPath: `/api/unit/${this.props.unit}/uploadEditorImg?username=${cms.username}&token=${cms.token}&context=${this.props.imageContext}`,
-                        fileFieldName: 'image',
-                        urlPropertyName: 'link'
-                    },
-                    // Add parameters to uploadFile plugin
-                    uploadFile: {
-                        serverPath: `/api/unit/${this.props.unit}/uploadEditorFile?username=${cms.username}&token=${cms.token}`,
-                        fileFieldName: 'file',
-                        urlPropertyName: 'link'
-                    }
-                  }}/>
+      { cms =>
+          <TrumbowygObj
+             id={this.id}
+             buttons={buttons}
+             data={this.initialHTML}
+             shouldInjectSvgIcons={false}
+             svgIconsPath="/node_modules/trumbowyg/dist/ui/icons.svg"
+             onChange={e => this.props.onChange(e.target.innerHTML)}
+             disabled={this.props.disabled}
+             tabToIndent={true}
+             plugins={{
+              // Add parameters to uploadImage plugin
+              uploadImage: {
+                  serverPath: `/api/unit/${this.props.unit}/uploadEditorImg?username=${cms.username}&token=${cms.token}&context=${this.props.imageContext}`,
+                  fileFieldName: 'image',
+                  urlPropertyName: 'link'
+              },
+              // Add parameters to uploadFile plugin
+              uploadFile: {
+                  serverPath: `/api/unit/${this.props.unit}/uploadEditorFile?username=${cms.username}&token=${cms.token}`,
+                  fileFieldName: 'file',
+                  urlPropertyName: 'link'
+              }
+        }}/>
       }
     </Contexts.CMS.Consumer>
   )}
