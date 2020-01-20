@@ -64,25 +64,25 @@ class UnitPage extends PageBase {
   // but this should get stripped out and handled here in UnitPage
   // TODO [UNIT-CONTENT-AJAX-ISSUE]: handle the AJAX issue described above
   renderData(data) { 
-    let sidebar = <SidebarComp data={data.sidebar}/>
+    const sidebar = <SidebarComp data={data.sidebar}/>
     const pageName = this.props.match.params.pageName
     const unitType = data.unit.type
-    const titleMap = { profile: "Profile",
-                       carousel: "Carousel",
-                       issueConfig: "Issue config",
-                       userConfig: "User config",
-                       unitBuilder: "Unit builder",
-                       nav: "Navigation",
-                       sidebar: "Sidebar",
-                       redirects: "Redirects",
-                       authorSearch: "Author Search"
-                     }
+    const cmsTitleMap = { profile: "Profile",
+                          carousel: "Carousel",
+                          issueConfig: "Issue config",
+                          userConfig: "User config",
+                          unitBuilder: "Unit builder",
+                          nav: "Navigation",
+                          sidebar: "Sidebar",
+                          redirects: "Redirects",
+                          authorSearch: "Author Search"
+                        }
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
           <div>
-            <MetaTagsComp title={titleMap[pageName] ? `${titleMap[pageName]}: ${data.unit.name}` :
-                                 data.content.title || data.unit.name}/>
+            <MetaTagsComp title={cmsTitleMap[pageName] ? `${cmsTitleMap[pageName]}: ${data.unit.name}` :
+                                 (data.content.title || data.unit.name)}/>
             { unitType == "root"
               ? <Header1Comp/>
               : <Header2Comp type={unitType} unitID={data.unit.id} />
