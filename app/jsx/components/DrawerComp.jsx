@@ -230,8 +230,8 @@ class DrawerComp extends React.Component {
                           title: <Link to={`/uc/root/redirects/static`}>Sitewide Redirects</Link>})
       siteSettings.push({ id: "authorSearch",
                           title: <Link to={`/uc/root/authorSearch`}>Author/User Search</Link>})
-      siteSettings.push({ id: "pubFields",
-                          title: <Link to={`/uc/root/pubFields`}>Pub Fields</Link>})
+      siteSettings.push({ id: "pubFieldList",
+                          title: <Link to={`/uc/root/pubFieldList`}>Pub Field List</Link>})
     }
     if (cms.permissions.super && this.props.data.unit.id != "root") {
       siteSettings.push({ id: "unitBuilder",

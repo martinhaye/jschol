@@ -1914,7 +1914,7 @@ def getAuthorSearchData
   return { search_str: str, authors: authors, accounts: accounts, forwards: forwards.values }
 end
 
-def getPubFieldsData
+def getPubFieldListData
   getUserPermissions(params[:username], params[:token], 'root')[:super] or halt(401)
   return { formats: Format.order(:id).map { |row| { id: row[:id], descrip: row[:descrip] } },
            fields: Field.order(:id).map { |row| { id: row[:id], descrip: row[:descrip], attrs: JSON.parse(row[:attrs]) } }

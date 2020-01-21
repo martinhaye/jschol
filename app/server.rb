@@ -607,7 +607,7 @@ def generalResponse
 
   # Skip ISO for CMS pages, since we need to check credentials that are held in browser session storage,
   # and thus don't have access until Javascript is running on the client side.
-  if request.path =~ %r{/(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|userAccount|pubFields)\b}
+  if request.path =~ %r{/(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|userAccount|pubFieldList|pubField)\b}
     puts "Skipping ISO for CMS page."
     return template
   end
@@ -1101,7 +1101,7 @@ def getUnitPageData(unitID, pageName, subPage)
       pageData[:header] = getUnitHeader(unit, nil, journalIssue, issuesSubNav, attrs)
     else
       pageData[:header] = getUnitHeader(unit, 
-      (pageName =~ /^(nav|sidebar|profile|carousel|issueConfig|userConfig|redirects|unitBuilder|authorSearch|pubFields)/) ?
+      (pageName =~ /^(nav|sidebar|profile|carousel|issueConfig|userConfig|redirects|unitBuilder|authorSearch|pubFieldList|pubField)/) ?
         nil : pageName, nil, nil, attrs)
     end
 
@@ -1132,8 +1132,10 @@ def getUnitPageData(unitID, pageName, subPage)
       pageData[:content] = getRedirectData(subPage)
     elsif pageName == "authorSearch"
       pageData[:content] = getAuthorSearchData
-    elsif pageName == "pubFields"
-      pageData[:content] = getPubFieldsData
+    elsif pageName == "pubFieldList"
+      pageData[:content] = getPubFieldListData
+    elsif pageName == "pubField"
+      pageData[:content] = getPubFieldData
     elsif isJournalIssue?(unit.id, pageName, subPage)
       pageData[:content] = getJournalIssueData(unit, attrs, 
         issueIds, issuesPublished, pageName, subPage)

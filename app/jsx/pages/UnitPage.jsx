@@ -57,7 +57,7 @@ class UnitPage extends PageBase {
     const sidebar = <SidebarComp data={data.sidebar}/>
     const pageName = this.props.match.params.pageName
     const unitType = data.unit.type
-    const isCmsPage = /^(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|pubFields)$/.test(pageName)
+    const isCmsPage = /^(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|pubFieldList|pubField)$/.test(pageName)
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
