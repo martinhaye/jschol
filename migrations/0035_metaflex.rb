@@ -28,7 +28,7 @@ Sequel.migration do
 
     create_table(:fields) do
       String :id, primary_key: true, null: false
-      foreign_key :format_id, :formats, type: String, null: false
+      foreign_key :format, :formats, type: String, null: false
       String :attrs, :type=>'JSON'
         # name (displayed on input forms)
         # placeholder (displayed on input forms inside the box)
@@ -44,14 +44,14 @@ Sequel.migration do
         # is_always_required: boolean
     end
 
-    from(:fields).insert(id: 'title', format_id: 'html',
+    from(:fields).insert(id: 'title', format: 'html',
       attrs: { name: "Title", descrip: "Official title of the publication", is_always_required: true }.to_json )
-    from(:fields).insert(id: 'published', format_id: 'date',
+    from(:fields).insert(id: 'published', format: 'date',
       attrs: { name: "Publication Date", descrip: "Date this was published", is_always_required: true }.to_json )
 
-    create_table(:pubtypes) do
+    create_table(:itemtypes) do
       String :id, primary_key: true, null: false
-      foreign_key :cloned_from, :pubtypes, type: String
+      foreign_key :cloned_from, :itemtypes, type: String
       String :attrs, :type=>'JSON'
         # is_default - shows up by default for all units
         # singular_name
@@ -59,23 +59,23 @@ Sequel.migration do
         # descrip: html
     end
 
-    create_table(:pubtype_fields) do
+    create_table(:itemtype_fields) do
       primary_key :id
-      foreign_key :pubtype_id, :pubtypes, type: String, null: false
+      foreign_key :itemtype, :itemtypes, type: String, null: false
       foreign_key :field_id, :fields, type: String, null: false
       Integer :ordering, :null=>false
       String :attrs, :type=>'JSON'
         # is_required: boolean
         # is_essential: boolean
         # locked: boolean  (for data from a data source that we don't want users mucking with)
-      index [:pubtype_id, :ordering], unique: true
-      index [:pubtype_id, :field_id], unique: true
+      index [:itemtype, :ordering], unique: true
+      index [:itemtype, :field_id], unique: true
     end
   end
 
   down do
-    drop_table(:pubtype_fields)
-    drop_table(:pubtypes)
+    drop_table(:itemtype_fields)
+    drop_table(:itemtypes)
     drop_table(:fields)
     drop_table(:formats)
   end
