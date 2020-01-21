@@ -34,12 +34,6 @@ class UnitPage extends PageBase {
   // diff-ing of pages - all these different pages have quite a few of the same components:
   // header, footer, nav, sidebar. 
   
-  // [********** AW - 3/15/17 **********]
-  // TODO [UNIT-CONTENT-AJAX-ISSUE]: need to separate these into different PageBase extensions
-  // React tries to render different content components 
-  // (ie - switch between DeparmentLayout and Series Layout or UnitSearchLayout)
-  // before the AJAX call for the different content has returned and then there are lots of issues!
-
   // Unit ID for permissions checking
   pagePermissionsUnit() {
     return this.props.match.params.unitID
@@ -59,15 +53,11 @@ class UnitPage extends PageBase {
       return <PageEl unit={data.unit} data={data.content} sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
   }
 
-  // [********** AMY NOTES 3/15/17 **********]
-  // TODO: each of the content layouts currently include the sidebars, 
-  // but this should get stripped out and handled here in UnitPage
-  // TODO [UNIT-CONTENT-AJAX-ISSUE]: handle the AJAX issue described above
   renderData(data) { 
     const sidebar = <SidebarComp data={data.sidebar}/>
     const pageName = this.props.match.params.pageName
     const unitType = data.unit.type
-    const isCmsPage = /profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch/.test(pageName)
+    const isCmsPage = /^(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|pubFields)$/.test(pageName)
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
@@ -87,7 +77,8 @@ class UnitPage extends PageBase {
               : pageName === 'search' ?
                 <SeriesLayout unit={data.unit} data={data.content} sidebar={sidebar} marquee={data.marquee}/>
               : isCmsPage ?
-                <cms.modules.UnitCMSLayout pageName={pageName} data={data} sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
+                <cms.modules.UnitCMSLayout pageName={pageName} data={data} location={this.props.location}
+                                           sendApiData={this.sendApiData} sendBinaryFileData={this.sendBinaryFileData}/>
               : pageName && !(data.content.issue) ?
                 /* If there's issue data here it's a journal page, otherwise it's static content */
                 <UnitStaticPageLayout unit={data.unit} data={data.content} sidebar={sidebar} fetchPageData={this.fetchPageData}/>

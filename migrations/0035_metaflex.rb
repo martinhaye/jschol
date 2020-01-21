@@ -30,6 +30,18 @@ Sequel.migration do
       String :id, primary_key: true, null: false
       foreign_key :format_id, :formats, type: String, null: false
       String :attrs, :type=>'JSON'
+        # name (displayed on input forms)
+        # placeholder (displayed on input forms inside the box)
+        # descrip: html (displayed on input forms)
+        # display_name (optional; displayed to end-users)
+        # person_role (required if format="person_list")
+        # choices (if format = "choice" or "choice_list")
+        # ++ "id: display text" e.g. for ext_pub_status
+        # ++ "text" e.g. for discipline
+        # ++ ? maybe including "grouped" e.g. "Group A | option 1", "Group A | option 2", "Group B | option 3"
+        # input_type: dropdown/radio/(?grouped) for choices; textbox/textarea for text
+        # input_size: # chars for textbox, # lines for textarea
+        # is_always_required: boolean
     end
 
     from(:fields).insert(id: 'title', format_id: 'html',
@@ -41,6 +53,10 @@ Sequel.migration do
       String :id, primary_key: true, null: false
       foreign_key :cloned_from, :pubtypes, type: String
       String :attrs, :type=>'JSON'
+        # is_default - shows up by default for all units
+        # singular_name
+        # plural_name
+        # descrip: html
     end
 
     create_table(:pubtype_fields) do
@@ -49,6 +65,9 @@ Sequel.migration do
       foreign_key :field_id, :fields, type: String, null: false
       Integer :ordering, :null=>false
       String :attrs, :type=>'JSON'
+        # is_required: boolean
+        # is_essential: boolean
+        # locked: boolean  (for data from a data source that we don't want users mucking with)
       index [:pubtype_id, :ordering], unique: true
       index [:pubtype_id, :field_id], unique: true
     end

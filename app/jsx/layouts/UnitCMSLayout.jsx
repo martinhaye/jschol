@@ -1,5 +1,6 @@
 import React from 'react'
 
+import ServerErrorComp from '../components/ServerErrorComp.jsx'
 import UnitProfileLayout from '../layouts/UnitProfileLayout.jsx'
 import UnitCarouselConfigLayout from '../layouts/UnitCarouselConfigLayout.jsx'
 import UnitIssueConfigLayout from '../layouts/UnitIssueConfigLayout.jsx'
@@ -9,11 +10,11 @@ import UnitNavConfigLayout from '../layouts/UnitNavConfigLayout.jsx'
 import RedirectConfigLayout from '../layouts/RedirectConfigLayout.jsx'
 import AuthorSearchLayout from '../layouts/AuthorSearchLayout.jsx'
 import UnitBuilderLayout from '../layouts/UnitBuilderLayout.jsx'
-import ServerErrorComp from '../components/ServerErrorComp.jsx'
+import PubFieldsConfigLayout from '../layouts/PubFieldsConfigLayout.jsx'
 
 class UnitCMSLayout extends React.Component {
   render () {
-    let { pageName, data, sendApiData, sendBinaryFileData } = this.props
+    let { pageName, data, location, sendApiData, sendBinaryFileData } = this.props
     return (
       pageName === 'profile' ?
         <UnitProfileLayout unit={data.unit} data={data.content} sendApiData={sendApiData} sendBinaryFileData={sendBinaryFileData}/>
@@ -32,7 +33,9 @@ class UnitCMSLayout extends React.Component {
       : pageName === 'redirects' ?
         <RedirectConfigLayout data={data.content} sendApiData={sendApiData}/>
       : pageName === 'authorSearch' ?
-        <AuthorSearchLayout data={data.content} location={this.props.location} sendApiData={sendApiData}/>
+        <AuthorSearchLayout data={data.content} location={location} sendApiData={sendApiData}/>
+      : pageName === 'pubFields' ?
+        <PubFieldsConfigLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>
       : <ServerErrorComp error="Not Found"/>
     )
   }

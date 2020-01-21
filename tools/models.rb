@@ -43,6 +43,14 @@ class EventLog < Sequel::Model
   unrestrict_primary_key
 end
 
+class Field < Sequel::Model
+  unrestrict_primary_key
+end
+
+class Format < Sequel::Model
+  unrestrict_primary_key
+end
+
 class InfoIndex < Sequel::Model(:info_index)
 end
 
@@ -85,6 +93,13 @@ end
 
 class Person < Sequel::Model(:people)
   unrestrict_primary_key
+end
+
+class PubType < Sequel::Model(:pubTypes)
+  unrestrict_primary_key
+end
+
+class PubTypeField < Sequel::Model(:pubtype_fields)
 end
 
 class ArchiveMeta < Sequel::Model(:archive_meta)
