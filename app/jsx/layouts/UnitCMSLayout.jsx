@@ -10,7 +10,8 @@ import UnitNavConfigLayout from '../layouts/UnitNavConfigLayout.jsx'
 import RedirectConfigLayout from '../layouts/RedirectConfigLayout.jsx'
 import AuthorSearchLayout from '../layouts/AuthorSearchLayout.jsx'
 import UnitBuilderLayout from '../layouts/UnitBuilderLayout.jsx'
-import PubFieldListLayout from '../layouts/PubFieldListLayout.jsx'
+import FieldListLayout from '../layouts/FieldListLayout.jsx'
+import FieldLayout from '../layouts/FieldLayout.jsx'
 
 class UnitCMSLayout extends React.Component {
   render () {
@@ -34,8 +35,10 @@ class UnitCMSLayout extends React.Component {
         <RedirectConfigLayout data={data.content} sendApiData={sendApiData}/>
       : pageName === 'authorSearch' ?
         <AuthorSearchLayout data={data.content} location={location} sendApiData={sendApiData}/>
-      : pageName === 'pubFieldList' ?
-        <PubFieldListLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>
+      : pageName === 'fieldList' ?
+        <FieldListLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>
+      : pageName === 'field' ?
+        <FieldLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>
       : <ServerErrorComp error="Not Found"/>
     )
   }

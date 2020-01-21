@@ -7,7 +7,7 @@ import MetaTagsComp from '../components/MetaTagsComp.jsx'
 import ModalComp from '../components/ModalComp.jsx'
 import WysiwygEditorComp from '../components/WysiwygEditorComp.jsx'
 
-export default class PubFieldsConfigLayout extends React.Component
+export default class FieldListLayout extends React.Component
 {
   state = { editingRow: null,
             anyChanges: false }
@@ -57,8 +57,8 @@ export default class PubFieldsConfigLayout extends React.Component
 
   render = () =>
     <div>
-      <MetaTagsComp title="Fields Config"/>
-      <h3>Fields Configuration</h3>
+      <MetaTagsComp title="Metadata Fields"/>
+      <h3>Metadata Fields Configuration</h3>
       <div className="c-columns">
         <main>
           <section className="o-columnbox1">

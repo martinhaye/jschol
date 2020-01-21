@@ -180,8 +180,8 @@ $cmsPages = %w{
                 issueConfig
                 nav
                 profile
-                pubField
-                pubFieldList
+                field
+                fieldList
                 redirects
                 sidebar
                 unitBuilder
@@ -1146,9 +1146,9 @@ def getUnitPageData(unitID, pageName, subPage)
       pageData[:content] = getRedirectData(subPage)
     elsif pageName == "authorSearch"
       pageData[:content] = getAuthorSearchData
-    elsif pageName == "pubFieldList"
+    elsif pageName == "fieldList"
       pageData[:content] = getPubFieldListData
-    elsif pageName == "pubField"
+    elsif pageName == "field"
       pageData[:content] = getPubFieldData
     elsif isJournalIssue?(unit.id, pageName, subPage)
       pageData[:content] = getJournalIssueData(unit, attrs, 
