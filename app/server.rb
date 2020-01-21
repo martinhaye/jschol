@@ -173,6 +173,22 @@ require_relative 'fetch'
 require_relative 'redirect'
 require_relative 'sitemap'
 
+# List of CMS pages (they need special non-ISO treatment)
+$cmsPages = %w{
+                authorSearch
+                carousel
+                issueConfig
+                nav
+                profile
+                pubField
+                pubFieldList
+                redirects
+                sidebar
+                unitBuilder
+                userConfig
+              }
+$cmsURLPat = Regexp.compile("/(#{$cmsPages.join("|")})\b")
+
 class StdoutLogger
   def << (str)
     puts(str)
@@ -607,7 +623,7 @@ def generalResponse
 
   # Skip ISO for CMS pages, since we need to check credentials that are held in browser session storage,
   # and thus don't have access until Javascript is running on the client side.
-  if request.path =~ %r{/(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|userAccount|pubFieldList|pubField)\b}
+  if request.path =~ $cmsURLPat
     puts "Skipping ISO for CMS page."
     return template
   end
@@ -1100,9 +1116,7 @@ def getUnitPageData(unitID, pageName, subPage)
       end
       pageData[:header] = getUnitHeader(unit, nil, journalIssue, issuesSubNav, attrs)
     else
-      pageData[:header] = getUnitHeader(unit, 
-      (pageName =~ /^(nav|sidebar|profile|carousel|issueConfig|userConfig|redirects|unitBuilder|authorSearch|pubFieldList|pubField)/) ?
-        nil : pageName, nil, nil, attrs)
+      pageData[:header] = getUnitHeader(unit, $cmsPages.include?(pageName) ? nil : pageName, nil, nil, attrs)
     end
 
     # Gather page content data

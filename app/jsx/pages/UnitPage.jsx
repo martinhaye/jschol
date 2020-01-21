@@ -9,6 +9,7 @@
 
 import React from 'react'
 import { Link } from 'react-router-dom'
+import _ from 'lodash'
 
 import Contexts from '../contexts.jsx'
 import PageBase from './PageBase.jsx'
@@ -26,6 +27,20 @@ import UnitStaticPageLayout from '../layouts/UnitStaticPageLayout.jsx'
 import SidebarComp from '../components/SidebarComp.jsx'
 import MetaTagsComp from '../components/MetaTagsComp.jsx'
 import ServerErrorComp from '../components/ServerErrorComp.jsx'
+
+const cmsPages = [
+                   "authorSearch",
+                   "carousel",
+                   "issueConfig",
+                   "nav",
+                   "profile",
+                   "pubFieldList",
+                   "pubField",
+                   "redirects",
+                   "sidebar",
+                   "unitBuilder",
+                   "userConfig",
+                 ]
 
 class UnitPage extends PageBase {
   // PageBase will fetch the following URL for us, and place the results in this.state.pageData
@@ -56,8 +71,8 @@ class UnitPage extends PageBase {
   renderData(data) { 
     const sidebar = <SidebarComp data={data.sidebar}/>
     const pageName = this.props.match.params.pageName
+    const isCmsPage = _.includes(cmsPages, pageName)
     const unitType = data.unit.type
-    const isCmsPage = /^(profile|carousel|issueConfig|userConfig|unitBuilder|nav|sidebar|redirects|authorSearch|pubFieldList|pubField)$/.test(pageName)
     return (
       <Contexts.CMS.Consumer>
         { (cms) =>
