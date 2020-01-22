@@ -181,13 +181,13 @@ $cmsPages = %w{
                 nav
                 profile
                 field
-                fieldList
+                fields
                 redirects
                 sidebar
                 unitBuilder
                 userConfig
               }
-$cmsURLPat = Regexp.compile("/(#{$cmsPages.join("|")})\b")
+$cmsURLPat = Regexp.compile("/(#{$cmsPages.join("|")})\\b")
 
 class StdoutLogger
   def << (str)
@@ -1146,10 +1146,10 @@ def getUnitPageData(unitID, pageName, subPage)
       pageData[:content] = getRedirectData(subPage)
     elsif pageName == "authorSearch"
       pageData[:content] = getAuthorSearchData
-    elsif pageName == "fieldList"
-      pageData[:content] = getPubFieldListData
+    elsif pageName == "fields"
+      pageData[:content] = getFieldListData
     elsif pageName == "field"
-      pageData[:content] = getPubFieldData
+      pageData[:content] = getFieldData(subPage)
     elsif isJournalIssue?(unit.id, pageName, subPage)
       pageData[:content] = getJournalIssueData(unit, attrs, 
         issueIds, issuesPublished, pageName, subPage)

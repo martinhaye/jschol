@@ -16,6 +16,7 @@ import FieldLayout from '../layouts/FieldLayout.jsx'
 class UnitCMSLayout extends React.Component {
   render () {
     let { pageName, data, location, sendApiData, sendBinaryFileData } = this.props
+    console.log("props:", this.props)
     return (
       pageName === 'profile' ?
         <UnitProfileLayout unit={data.unit} data={data.content} sendApiData={sendApiData} sendBinaryFileData={sendBinaryFileData}/>
@@ -35,7 +36,7 @@ class UnitCMSLayout extends React.Component {
         <RedirectConfigLayout data={data.content} sendApiData={sendApiData}/>
       : pageName === 'authorSearch' ?
         <AuthorSearchLayout data={data.content} location={location} sendApiData={sendApiData}/>
-      : pageName === 'fieldList' ?
+      : pageName === 'fields' ?
         <FieldListLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>
       : pageName === 'field' ?
         <FieldLayout unit={data.unit} data={data.content} sendApiData={sendApiData}/>

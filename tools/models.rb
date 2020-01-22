@@ -81,6 +81,13 @@ end
 class Issue < Sequel::Model
 end
 
+class ItemType < Sequel::Model(:itemtypes)
+  unrestrict_primary_key
+end
+
+class ItemTypeField < Sequel::Model(:itemtype_fields)
+end
+
 class Location < Sequel::Model
 end
 
@@ -93,13 +100,6 @@ end
 
 class Person < Sequel::Model(:people)
   unrestrict_primary_key
-end
-
-class PubType < Sequel::Model(:pubTypes)
-  unrestrict_primary_key
-end
-
-class PubTypeField < Sequel::Model(:pubtype_fields)
 end
 
 class ArchiveMeta < Sequel::Model(:archive_meta)

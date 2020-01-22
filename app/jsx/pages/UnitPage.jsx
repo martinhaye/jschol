@@ -34,7 +34,7 @@ const cmsPages = [
                    "issueConfig",
                    "nav",
                    "profile",
-                   "fieldList",
+                   "fields",
                    "field",
                    "redirects",
                    "sidebar",

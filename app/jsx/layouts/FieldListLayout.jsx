@@ -18,31 +18,32 @@ export default class FieldListLayout extends React.Component
               <table>
                 <thead>
                   <tr>
-                    <th scope="col">Field name</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Field</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Format</th>
+                    <th scope="col">Always required?</th>
                   </tr>
                 </thead>
                 <tbody>
-                  { _.map(this.props.data.fields, row => /* todo */
+                  { _.map(this.props.data.fields, row =>
                     <tr key={row.id}>
                       <td className="c-editable-tableCell">
-                        {row.id}
+                        <a href={`/uc/${this.props.unit.id}/field/${row.id}`}>{row.id}</a>
                       </td>
                       <td className="c-editable-tableCell">
-                        <button onClick={e=>{ e.preventDefault(); this.setState({editingRow: row}) }}>View/Edit</button>
+                        {row.attrs.name}
+                      </td>
+                      <td className="c-editable-tableCell">
+                        {row.format}
+                      </td>
+                      <td className="c-editable-tableCell">
+                        {row.attrs.is_always_required ? "yes" : null}
                       </td>
                     </tr>)
                   }
-                  <tr key="new">
-                    <td className="c-editable-tableCell">
-                      <i>(add field)</i>
-                    </td>
-                    <td className="c-editable-tableCell">
-                      Add button here
-                    </td>
-                  </tr>
                 </tbody>
               </table>
+              <button>Add new field</button>
             </div>
           </section>
         </main>
